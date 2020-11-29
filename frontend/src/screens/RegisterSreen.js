@@ -24,7 +24,6 @@ const RegisterScreen = ({ location, history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(password, confirmPassword)
         if (password !== confirmPassword) {
             setMessage('Passwords do not match!');
         } else {

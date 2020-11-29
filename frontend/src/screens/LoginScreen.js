@@ -18,8 +18,6 @@ const LoginScreen = ({ location, history }) => {
     const { loading, error, userInfo } = userLogin;
 
     const redirect = location.search ? location.search.split('=')[1] : '/';
-    console.log(userInfo)
-    console.log(redirect)
 
 
     const submitHandler = (e) => {
@@ -30,7 +28,6 @@ const LoginScreen = ({ location, history }) => {
 
     useEffect(() => {
         if (userInfo) {
-            console.log(1)
             history.push(redirect);
         }
     }, [history, userInfo, redirect]);
