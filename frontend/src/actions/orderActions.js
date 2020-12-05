@@ -1,5 +1,7 @@
-import { ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL } from '../constants/orderConstants.js';
+import { ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, ORDER_CREATE_REQUEST, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_LIST_MY_FAIL, ORDER_LIST_MY_SUCCESS, ORDER_LIST_MY_REQUEST } from '../constants/orderConstants.js';
 import axios from 'axios';
+import { CART_RESET } from '../constants/cartConstants';
+
 
 export const createOrder = (order) => async (dispatch, getState) => {
     try {
@@ -19,6 +21,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
         dispatch({
             type: ORDER_CREATE_SUCCESS, payload: data
+        });
+
+        dispatch({
+            type: CART_RESET
         });
     } catch (error) {
         dispatch(
@@ -81,6 +87,34 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
         dispatch(
             {
                 type: ORDER_PAY_FAIL,
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            });
+    }
+}
+
+export const lisMyOrders = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: ORDER_LIST_MY_REQUEST
+        })
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const { data } = await axios.get(`/api/orders/myorders`, config);
+
+        dispatch({
+            type: ORDER_LIST_MY_SUCCESS, payload: data
+        });
+    } catch (error) {
+        dispatch(
+            {
+                type: ORDER_LIST_MY_FAIL,
                 payload: error.response && error.response.data.message ? error.response.data.message : error.message
             });
     }
