@@ -212,9 +212,9 @@ export const updateUser = (user) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        console.log(user)
+
         const { data } = await axios.put(`/api/users/${user._id}`, user, config);
-        console.log(data)
+
         dispatch({
             type: USER_UPDATE_SUCCESS
         });

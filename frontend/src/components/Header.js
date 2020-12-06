@@ -33,7 +33,8 @@ const Header = () => {
                                 <Nav.Link ><i className="fas fa-shopping-cart"></i> Cart</Nav.Link>
                             </LinkContainer>
                             {userInfo ? (
-                                <NavDropdown title={userInfo.name} id='username'>
+                                <NavDropdown title={<div className='icon-toggle'> <i className="fas fa-user"></i> {userInfo.name}</div>} id='username'>
+
                                     <LinkContainer to='/profile'>
                                         <NavDropdown.Item >Profile</NavDropdown.Item>
                                     </LinkContainer>
@@ -45,7 +46,7 @@ const Header = () => {
                                 </LinkContainer>
                                 )}
                             {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title='Admin' id='adminmenu'>
+                                <NavDropdown title={<div className='icon-toggle'> <i className="fas fa-user-lock"></i> admin</div>} id='adminmenu'>
                                     <LinkContainer to='/admin/userslist'>
                                         <NavDropdown.Item >Users</NavDropdown.Item>
                                     </LinkContainer>
