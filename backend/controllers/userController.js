@@ -137,4 +137,46 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 });
 
-export { getUserProfile, authUser, registerUser, updateUserProfile, getUsers, deleteUser };
+
+//@desc GET user by id
+//@route GET /api/users/:id
+//@access Private/Admin
+const getUserById = asyncHandler(async (req, res) => {
+    const user = (await User.findById(req.params.id).select('-password'));
+    if (user)
+        res.json(user);
+    else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
+//@desc Update user 
+//@route PUT /api/users/:id
+//@access Private/Admin
+const updateUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.phone = req.body.phone || user.phone;
+        user.isAdmin = req.body.isAdmin;
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            phone: updatedUser.phone,
+            isAdmin: updatedUser.isAdmin,
+        });
+
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
+
+export { getUserProfile, authUser, registerUser, updateUserProfile, getUsers, deleteUser, getUserById, updateUser };
