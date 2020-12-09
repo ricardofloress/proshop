@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler';
 
 const protect = asyncHandler(async (req, res, next) => {
     let token;
+
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
@@ -25,7 +26,6 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const admin = asyncHandler(async (req, res, next) => {
-    console.log(req.user);
     if (req.user && req.user.isAdmin) {
         next();
     } else {

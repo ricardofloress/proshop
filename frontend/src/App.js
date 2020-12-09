@@ -16,6 +16,7 @@ import OrderScreen from "./screens/OrderScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
 
 
 //Ficheiro principal 
@@ -36,7 +37,7 @@ function App() {
           <Route path="/cart/:id?" component={CartScreen} />
           <Route path="/admin/productslist" component={ProductListScreen} />
           <Route path="/admin/userslist" component={UserListScreen} />
-
+          <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
           <Route path="/admin/user/:id/edit" component={UserEditScreen} />
           <Route path="/" component={HomeScreen} exact />
 
