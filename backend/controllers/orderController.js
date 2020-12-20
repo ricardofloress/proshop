@@ -68,4 +68,11 @@ const getMyOrders = asyncHandler(async (req, res) => {
     res.json(orders);
 });
 
-export { addOrderItems, getOrderbyId, updateOrderToPaid, getMyOrders };
+//@desc Get all orders
+//@route GET /api/orders/
+//@access Protected Admin
+const getOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate('user', 'id name');
+    res.json(orders);
+});
+export { addOrderItems, getOrderbyId, updateOrderToPaid, getMyOrders, getOrders };
